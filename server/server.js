@@ -10,6 +10,7 @@ import bookingRouter from './routes/bookingRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import { stripeWebhooks } from './controllers/stripeWebhooks.js';
+import movieRoutes from "./routes/movieRoutes.js";
 
 const app = express();
 const port = 3000;
@@ -18,7 +19,7 @@ await connectDB()
 
 // Stripe Webhooks Route
 app.use('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
-
+app.use("/api/movies", movieRoutes);
 // Middleware
 app.use(express.json())
 app.use(cors())
@@ -35,4 +36,5 @@ app.use('/api/user', userRouter)
 
 
 app.listen(port, ()=> console.log(`Server listening at http://localhost:${port}`));
+
 
